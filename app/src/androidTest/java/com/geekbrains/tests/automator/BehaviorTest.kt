@@ -61,7 +61,7 @@ class BehaviorTest {
 
     //Убеждаемся, что поиск работает как ожидается
     @Test
-    fun test_SearchIsPositive() {
+    fun test_EspressoSearchIsPositive() {
         //Через uiDevice находим editText
         val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
         //Устанавливаем значение
@@ -79,8 +79,24 @@ class BehaviorTest {
             )
         //Убеждаемся, что сервер вернул корректный результат. Обратите внимание, что количество
         //результатов может варьироваться во времени, потому что количество репозиториев постоянно меняется.
-        Assert.assertEquals(changedText.text.toString(), "Number of results: 814")
+        Assert.assertEquals(changedText.text.toString(), "Number of results: 815")
     }
+
+    @Test
+    fun test_SearchIsPositive() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+        val changedText =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountTextView")),
+                TIMEOUT
+            )
+        Assert.assertEquals(changedText.text.toString(), "Number of results: 815")
+    }
+
 
     //Убеждаемся, что DetailsScreen открывается
     @Test
@@ -108,6 +124,138 @@ class BehaviorTest {
         //Чтобы проверить отображение определенного количества репозиториев,
         //вам в одном и том же методе нужно отправить запрос на сервер и открыть DetailsScreen.
         Assert.assertEquals(changedText.text, "Number of results: 0")
+    }
+
+    @Test
+    fun test_OpenDetailsScreenAndCheckCorrectCount() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+        val changedTextActivityMain =
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountTextView")),
+                TIMEOUT
+            ).text
+        val toDetails = uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+        toDetails.click()
+        uiDevice.findObject(By.res(packageName, "totalCountTextView"))
+        val changedTextDetailsActivity =
+            uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+        Assert.assertEquals(changedTextDetailsActivity.text, changedTextActivityMain)
+    }
+
+    @Test
+    fun test_EditTextNotBlankSearch_NotNullTextView() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+        Assert.assertNotNull(
+            uiDevice.wait(
+                Until.findObject(By.res(packageName, "totalCountTextView")),
+                TIMEOUT
+            )
+        )
+    }
+
+    @Test
+    fun test_IncrementClickPositiveTest() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+
+        uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountTextView")),
+            TIMEOUT
+        )
+
+        val toDetails =
+            uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+        toDetails.click()
+        uiDevice.findObject(By.res(packageName, "incrementButton"))
+        val incrementButton =
+            uiDevice.wait(Until.findObject(By.res(packageName, "incrementButton")), TIMEOUT)
+        incrementButton.click()
+        val changedTextDetailsActivity =
+            uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+        Assert.assertEquals(changedTextDetailsActivity.text, "Number of results: 816")
+    }
+
+    @Test
+    fun test_IncrementClickNegativeTest() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+
+        uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountTextView")),
+            TIMEOUT
+        )
+        val toDetails =
+            uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+        toDetails.click()
+        uiDevice.findObject(By.res(packageName, "incrementButton"))
+        val incrementButton =
+            uiDevice.wait(Until.findObject(By.res(packageName, "incrementButton")), TIMEOUT)
+        incrementButton.click()
+        val changedTextDetailsActivity =
+            uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+        Assert.assertNotEquals(changedTextDetailsActivity.text, "Number of results: 815")
+    }
+
+    @Test
+    fun test_DecrementClickPositiveTest() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+
+        uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountTextView")),
+            TIMEOUT
+        )
+        val toDetails =
+            uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+        toDetails.click()
+        uiDevice.findObject(By.res(packageName, "decrementButton"))
+        val incrementButton =
+            uiDevice.wait(Until.findObject(By.res(packageName, "decrementButton")), TIMEOUT)
+        incrementButton.click()
+        val changedTextDetailsActivity =
+            uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+        Assert.assertEquals(changedTextDetailsActivity.text, "Number of results: 814")
+    }
+
+    @Test
+    fun test_DecrementClickNegativeTest() {
+
+        val editText = uiDevice.findObject(By.res(packageName, "searchEditText"))
+        editText.text = "UiAutomator"
+        val totalCount = uiDevice.findObject(By.res(packageName, "searchTotalCountButton"))
+        totalCount.click()
+
+        uiDevice.wait(
+            Until.findObject(By.res(packageName, "totalCountTextView")),
+            TIMEOUT
+        )
+        val toDetails =
+            uiDevice.findObject(By.res(packageName, "toDetailsActivityButton"))
+        toDetails.click()
+        uiDevice.findObject(By.res(packageName, "decrementButton"))
+        val incrementButton =
+            uiDevice.wait(Until.findObject(By.res(packageName, "decrementButton")), TIMEOUT)
+        incrementButton.click()
+        val changedTextDetailsActivity =
+            uiDevice.wait(Until.findObject(By.res(packageName, "totalCountTextView")), TIMEOUT)
+        Assert.assertNotEquals(changedTextDetailsActivity.text, "Number of results: 815")
     }
 
     companion object {
