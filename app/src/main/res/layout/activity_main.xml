@@ -28,12 +28,21 @@
         app:layout_constraintTop_toTopOf="parent" />
 
     <Button
+        android:id="@+id/searchTotalCountButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin"
+        android:text="@string/search_total_count"
+        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+
+
+    <Button
         android:id="@+id/toDetailsActivityButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin"
         android:text="@string/to_details"
-        app:layout_constraintTop_toBottomOf="@id/searchEditText" />
+        app:layout_constraintTop_toBottomOf="@id/searchTotalCountButton" />
 
     <TextView
         android:id="@+id/totalCountTextView"
