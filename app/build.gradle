@@ -1,21 +1,25 @@
 plugins {
     id 'com.android.application'
     id 'kotlin-android'
-    id 'kotlin-android-extensions'
+    id 'kotlin-parcelize'
 }
 
 android {
-    compileSdkVersion 30
+    compileSdkVersion 31
     buildToolsVersion "30.0.2"
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
         minSdkVersion 23
-        targetSdkVersion 30
+        targetSdkVersion 31
         versionCode 1
         versionName "1.0"
 
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+    }
+
+    buildFeatures {
+        viewBinding true
     }
 
     buildTypes {
@@ -64,7 +68,7 @@ dependencies {
     //Test core
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
-    androidTestImplementation 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //Mockito
     testImplementation "org.mockito:mockito-core:2.19.0"
     testImplementation 'org.mockito:mockito-inline:2.8.9'
@@ -83,4 +87,12 @@ dependencies {
 
     //UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
+
+    //fragment
+    debugImplementation ('androidx.fragment:fragment-testing:1.5.6'){
+        transitive = false
+    }
+
+    //RecyclerView
+    debugImplementation 'androidx.test.espresso:espresso-contrib:3.5.1'
 }
