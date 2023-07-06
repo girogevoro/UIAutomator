@@ -9,7 +9,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.geekbrains.tests.BuildConfig
 import com.geekbrains.tests.R
 import com.geekbrains.tests.databinding.ActivityMainBinding
-import com.geekbrains.tests.databinding.FragmentDetailsBinding
 import com.geekbrains.tests.model.SearchResult
 import com.geekbrains.tests.presenter.RepositoryContract
 import com.geekbrains.tests.presenter.search.PresenterSearchContract
@@ -19,6 +18,7 @@ import com.geekbrains.tests.repository.GitHubApi
 import com.geekbrains.tests.repository.GitHubRepository
 import com.geekbrains.tests.view.details.DetailsActivity
 import retrofit2.Retrofit
+import retrofit2.adapter.rxjava3.RxJava3CallAdapterFactory
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.*
 
@@ -93,13 +93,14 @@ class MainActivity : AppCompatActivity(), ViewSearchContract {
     private fun createRetrofit(): Retrofit {
         return Retrofit.Builder()
             .baseUrl(BASE_URL)
+            .addCallAdapterFactory(RxJava3CallAdapterFactory.create())
             .addConverterFactory(GsonConverterFactory.create())
             .build()
     }
 
     override fun displaySearchResults(
         searchResults: List<SearchResult>,
-        totalCount: Int
+        totalCount: Int,
     ) {
         with(binding.totalCountTextView) {
             visibility = View.VISIBLE
