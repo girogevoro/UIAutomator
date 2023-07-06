@@ -5,13 +5,13 @@ plugins {
 }
 
 android {
-    compileSdkVersion 31
-    buildToolsVersion "30.0.2"
+    compileSdk 31
+    buildToolsVersion '30.0.3'
 
     defaultConfig {
         applicationId "com.geekbrains.tests"
         minSdkVersion 23
-        targetSdkVersion 31
+        targetSdk 31
         versionCode 1
         versionName "1.0"
 
@@ -65,12 +65,18 @@ dependencies {
     implementation 'com.google.android.material:material:1.3.0'
     implementation 'androidx.constraintlayout:constraintlayout:2.0.4'
 
+    implementation "androidx.lifecycle:lifecycle-viewmodel-ktx:2.3.1"
+    implementation 'com.google.ar:core:1.37.0'
+    implementation 'junit:junit:4.12'
+    implementation 'androidx.test.ext:junit-ktx:1.1.5'
+
+
     //Test core
     testImplementation 'junit:junit:4.13.2'
     androidTestImplementation 'androidx.test.ext:junit:1.1.2'
     androidTestImplementation 'androidx.test.espresso:espresso-core:3.5.1'
     //Mockito
-    testImplementation "org.mockito:mockito-core:2.19.0"
+    testImplementation 'org.mockito:mockito-core:3.10.0'
     testImplementation 'org.mockito:mockito-inline:2.8.9'
     testImplementation('com.nhaarman:mockito-kotlin:1.5.0') {
         exclude group: 'org.jetbrains.kotlin'
@@ -84,6 +90,9 @@ dependencies {
     testImplementation 'androidx.test.ext:truth:1.3.0'
     testImplementation 'androidx.test.espresso:espresso-core:3.3.0'
     testImplementation 'androidx.test.espresso:espresso-intents:3.3.0'
+
+
+
 
     //UI Automator
     androidTestImplementation 'androidx.test.uiautomator:uiautomator:2.2.0'
@@ -100,4 +109,7 @@ dependencies {
     implementation 'io.reactivex.rxjava3:rxandroid:3.0.0'
     implementation 'com.squareup.retrofit2:adapter-rxjava3:2.9.0'
     implementation "io.reactivex.rxjava3:rxjava:3.0.0"
+
+    testImplementation 'androidx.arch.core:core-testing:2.1.0'
+
 }
