@@ -65,5 +65,8 @@ internal class FakeGitHubRepository : RepositoryContract {
         return SearchResponse(list.size, list)
     }
 
+    override suspend fun searchGithubAsync(query: String): SearchResponse {
+        return generateSearchResponse()
+    }
 
 }

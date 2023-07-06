@@ -39,4 +39,8 @@ internal class GitHubRepository(
         return gitHubApi.searchGithubRx(query)
     }
 
+    override suspend fun searchGithubAsync(query: String): SearchResponse {
+        return gitHubApi.searchGithubAsync(query).await()
+    }
+
 }
