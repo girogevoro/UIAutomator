@@ -23,7 +23,7 @@ import org.robolectric.annotation.Config
 class SearchViewModelTest {
     @get:Rule
     var testCoroutineRule = TestCoroutineRule()
-
+    //test
     private lateinit var searchViewModel: SearchViewModel
 
     @Mock
